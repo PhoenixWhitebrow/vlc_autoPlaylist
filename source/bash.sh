@@ -7,7 +7,7 @@ vlc=/Applications/VLC.app/Contents/MacOS/VLC
 # setting the file directory as the working directory
 cd $dir
 # getting a list of files in a directory
-files=`find "$dir" -maxdepth 1 -type f -not -name '.*' | sort -h`
+files=`find "$dir" -maxdepth 1 -type f -not -name '.*' | sort -V`
 # writing a list of files to a temporary text file
 echo $files > .temp
 # creating an array from the contents of a temporary file, delimited by strings

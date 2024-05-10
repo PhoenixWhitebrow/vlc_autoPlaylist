@@ -1,0 +1,13 @@
+# Ignore macOS Desktop Services Store file
+**/.DS_Store
+
+# Ignore the installator temp directory
+VLC autoPlaylist
+
+# Avoid ignore installator service files
+!VLC autoPlaylist/.DS_Store
+!VLC autoPlaylist/.background.png
+!VLC autoPlaylist/Applications
+
+# Ignore test.sh
+source/test.sh
