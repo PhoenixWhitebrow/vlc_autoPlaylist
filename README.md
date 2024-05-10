@@ -22,6 +22,6 @@ Finally, the script emulates pressing the return and space keys in rapid success
 Expected result: VLC is open, the playlist contains all files from the parent directory of the initially opened file, the initially opened file is started and paused.
 
 Plans for improvement:
-1. Add a filter by file type to prevent non-media files from getting into the playlist;
+1. Add a filter by file type to prevent non-media files from getting into the playlist; ☑️done
 2. Work on a solution for Linux.
 3. Deal with a specific bug when used with the Remote Mouse app from http://remotemouse.net/ (the application starts twice when double-tapping, which leads to the script not working correctly).
