@@ -84,7 +84,6 @@ xdotool key "KP_Space"
 
 # get the line number of opened file, cut the rest of the grep output
 INDEX=`grep -n "$FILE" .temp | cut -d : -f 1`
-echo $((INDEX))
 # press the N (Next) hotkey to reach the opened file
 for (( i = 1; i < $INDEX; i++ ))
 do
