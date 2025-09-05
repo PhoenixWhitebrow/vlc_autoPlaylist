@@ -56,21 +56,21 @@ echo "$FILES" >> .temp
 # creating an array from the contents of a temporary file, delimited by strings
 mapfile ARR < .temp 
 
-# open the files (supposed you have set the VLC as a default media player, it runs in an 'One instance' mode 
-# and the setting 'Enqueue items into playlist in one instance mode' 
-# in the Preferences → All (Advanced Preferences) → Playlist section are turned ON)
+# open the files (Checkboxes 'Use only one instance when started from file manager' 
+# and 'Enqueue items into playlist in one instance mode' should be turned ON 
+# in the VLC → Tools → Preferences → All (Advanced Preferences) → Playlist)
 
 # get the first file's full path by cutting the ending of a string that contains item's position in the array
 F=`echo ${ARR[0]} | sed -E "s/(.*\/.*)\[.*/\1/"`
 # open file
-open "$F"
+gtk-launch vlc "$F"
 # a little timeout for player to load properly
 sleep 0.5
 # and now adding the rest of the files
 for (( i=1; i < ${#ARR[@]}; i++ ))
 do
   F=`echo ${ARR[i]} | sed -E "s/(.*\/.*)\[.*/\1/"`
-  open "$F"
+  gtk-launch vlc "$F"
 done
 
 # get the VLC main window id
