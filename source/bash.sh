@@ -59,19 +59,22 @@ mapfile ARR < .temp
 # open the files (supposed you have set the VLC as a default media player, it runs in an 'One instance' mode 
 # and the setting 'Enqueue items into playlist in one instance mode' 
 # in the Preferences → All (Advanced Preferences) → Playlist section are turned ON)
-for (( i=0; i < ${#ARR[@]}; i++ ))
+
+# get the first file's full path by cutting the ending of a string that contains item's position in the array
+F=`echo ${ARR[0]} | sed -E "s/(.*\/.*)\[.*/\1/"`
+# open file
+open "$F"
+# a little timeout for player to load properly
+sleep 0.5
+# and now adding the rest of the files
+for (( i=1; i < ${#ARR[@]}; i++ ))
 do
-  # get the file's full path by cutting the ending of a string that contains item's position in the array
   F=`echo ${ARR[i]} | sed -E "s/(.*\/.*)\[.*/\1/"`
-  # open file
   open "$F"
 done
-# a little timeout for player to load properly
-sleep 1
 
 # get the VLC main window id
 WID=`xdotool search --pid $(ps aux | grep '[/]usr/bin/vlc' | awk '{print $2}') | sort -V | head -1`
-
 # activate and focus on the VLC window
 xdotool windowactivate $WID
 xdotool windowfocus $WID
