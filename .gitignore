@@ -11,3 +11,4 @@ VLC autoPlaylist
 
 # Ignore test.sh
 source/test.sh
+source/bash-test.sh
