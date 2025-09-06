@@ -91,8 +91,10 @@ do
   sleep 0.25
 done
 
-# stop the playback
-xdotool key "KP_Space"
+# stop the playback again if the index is grater that one
+if [ $((INDEX)) -gt 0 ]; then 
+  xdotool key "KP_Space"
+fi
 
 # deleting a temporary text file
 rm .temp
