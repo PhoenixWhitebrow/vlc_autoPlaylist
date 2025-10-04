@@ -49,12 +49,8 @@ TYPE_TTA="tta"
 TYPE_WAVPACK="wv"
 TYPES="$TYPE_3GP|$TYPE_ASF|$TYPE_AVI|$TYPE_DVRMS|$TYPE_FLV|$TYPE_MKV|$TYPE_MIDI|$TYPE_QICKTIME|$TYPE_MP4|$TYPE_OGG|$TYPE_WAV|$TYPE_MPEG2_ES|$TYPE_MPEG2_TS|$TYPE_PVA|$TYPE_AIFF|$TYPE_RAW_AUDIO|$TYPE_RAW_DV|$TYPE_MXF|$TYPE_VOB|$TYPE_RM|$TYPE_BLURAY|$TYPE_VCD|$TYPE_CDDA|$TYPE_HEIF|$TYPE_AVIF|$TYPE_AC3|$TYPE_ALAC|$TYPE_XM|$TYPE_FLAC|$TYPE_IT|$TYPE_MOD|$TYPE_MONKEY|$TYPE_OPUS|$TYPE_PLS|$TYPE_QCP|$TYPE_SPEEX|$TYPE_S3M|$TYPE_TTA|$TYPE_WAVPACK"
 
-# getting a list of supported files in a directory (exclude subdirectories and hidden files), sort by name
-FILES=`find "$DIR" -maxdepth 1 -type f -not -name '.*' -regextype posix-egrep -regex ".*\.($TYPES)" | sort -V`
-# writing a list of files to a temporary text file
-echo "$FILES" >> .temp
-# creating an array from the contents of a temporary file, delimited by strings
-mapfile ARR < .temp 
+# getting a list of supported files in a directory (exclude subdirectories and hidden files), sort by name, put the result to an array
+mapfile -t ARR < <( find "$DIR" -maxdepth 1 -type f -not -name '.*' -regextype posix-egrep -regex ".*\.($TYPES)" | sort -V ) 
 
 # open the files (Checkboxes 'Use only one instance when started from file manager' 
 # and 'Enqueue items into playlist in one instance mode' should be turned ON 
@@ -80,10 +76,10 @@ xdotool windowactivate $WID
 xdotool windowfocus $WID
 
 # stop the playback
-xdotool key "KP_Space"
+# xdotool key "KP_Space"
 
 # get the line number of opened file, cut the rest of the grep output
-INDEX=`grep -n "$FILE" .temp | cut -d : -f 1`
+INDEX=`printf -- '%s\n' "${ARR[@]}" | grep -n "$FILE" | cut -d : -f 1`
 # press the N (Next) hotkey to reach the opened file
 for (( i = 1; i < $INDEX; i++ ))
 do
@@ -92,9 +88,6 @@ do
 done
 
 # stop the playback again if the index is grater that one
-if [ $((INDEX)) -gt 0 ]; then 
-  xdotool key "KP_Space"
-fi
-
-# deleting a temporary text file
-rm .temp
+#if [ $((INDEX)) -gt 0 ]; then 
+#  xdotool key "KP_Space"
+#fi
